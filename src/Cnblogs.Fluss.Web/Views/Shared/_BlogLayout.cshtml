@@ -10,8 +10,11 @@
     <link rel="stylesheet" type="text/css" href="/dist/blog.min.css"/>
 </head>
 <body class="body">
-    <div class="main-content">
-        @RenderBody()
-    </div>
+<div class="main-content">
+    @RenderBody()
+</div>
+<div class="footer">
+    @Model.PageFooter
+</div>
 </body>
 </html>

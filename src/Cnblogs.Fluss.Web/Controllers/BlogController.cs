@@ -20,7 +20,7 @@ namespace Cnblogs.Fluss.Web.Controllers
         {
             var blog = await _mediator.Send(new GetBlogSite(1));
             var posts = await _mediator.Send(new GetBlogHomePosts(1, 15, 1));
-            var page = new HomeBlogPage(1, posts, blog) { PageTitle = blog.Title };
+            var page = new HomeBlogPage(1, posts, blog) {PageTitle = blog.Title, PageFooter = blog.FooterText};
             return View(page);
         }
 
@@ -28,7 +28,7 @@ namespace Cnblogs.Fluss.Web.Controllers
         public async Task<IActionResult> PostDetail(int postId)
         {
             var postDetailModel = await _mediator.Send(new GetBlogPostDetail(1, postId));
-            var page = new PostDetailBlogPage(postDetailModel) { PageTitle = postDetailModel.Title };
+            var page = new PostDetailBlogPage(postDetailModel) {PageTitle = postDetailModel.Title};
             return View(page);
         }
     }

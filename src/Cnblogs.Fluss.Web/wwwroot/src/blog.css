@@ -65,3 +65,7 @@
 .post-detail-body > * {
  @apply mt-3
 }
+
+.footer{
+ @apply flex justify-center p-8 pb-16;
+}

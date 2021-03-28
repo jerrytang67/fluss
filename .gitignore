@@ -254,3 +254,4 @@ appsettings.Production.json
 
 .idea/
 /src/Cnblogs.Fluss.Web/wwwroot/dist/
+src/Cnblogs.Fluss.Web/appsettings.Development.json

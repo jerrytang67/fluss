@@ -3,61 +3,58 @@ using System;
 using Cnblogs.Fluss.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cnblogs.Fluss.Infrastructure.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20210125082538_Initial")]
-    partial class Initial
+    [Migration("20210328133748_add_footerText")]
+    partial class add_footerText
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("Relational:MaxIdentifierLength", 64)
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("Cnblogs.Fluss.Domain.Entities.BlogPost", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
 
                     b.Property<string>("AutoDesc")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<long>("BlogId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetimeoffset")
+                        .HasColumnType("datetime(6)")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<DateTimeOffset>("DateUpdated")
                         .ValueGeneratedOnUpdate()
-                        .HasColumnType("datetimeoffset")
+                        .HasColumnType("datetime(6)")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("IsExist")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsPublished")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -70,32 +67,36 @@ namespace Cnblogs.Fluss.Infrastructure.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetimeoffset")
+                        .HasColumnType("datetime(6)")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<DateTimeOffset>("DateUpdated")
                         .ValueGeneratedOnUpdate()
-                        .HasColumnType("datetimeoffset")
+                        .HasColumnType("datetime(6)")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("FooterText")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("varchar(512) CHARACTER SET utf8mb4");
 
                     b.Property<int>("HomePageSize")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsExist")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("SubTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -106,66 +107,27 @@ namespace Cnblogs.Fluss.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<long>("BlogId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTimeOffset>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetimeoffset")
+                        .HasColumnType("datetime(6)")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<DateTimeOffset>("DateUpdated")
                         .ValueGeneratedOnUpdate()
-                        .HasColumnType("datetimeoffset")
+                        .HasColumnType("datetime(6)")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<bool>("IsExist")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Raw")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("Refer")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlogId");
-
-                    b.HasIndex("Refer");
-
-                    b.ToTable("blog_content_block");
-                });
-
-            modelBuilder.Entity("Cnblogs.Fluss.Domain.Entities.PostContentRecord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<Guid>("ContentBlockId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("DateCreated")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetimeoffset")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<DateTimeOffset>("DateUpdated")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetimeoffset")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<bool>("IsExist")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
@@ -173,13 +135,61 @@ namespace Cnblogs.Fluss.Infrastructure.Migrations
                     b.Property<long>("PostId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Raw")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ContentBlockId", "IsExist");
+                    b.HasIndex("BlogId");
 
-                    b.HasIndex("PostId", "IsExist");
+                    b.HasIndex("PostId");
 
-                    b.ToTable("blog_post_content");
+                    b.ToTable("blog_content_block");
+                });
+
+            modelBuilder.Entity("Cnblogs.Fluss.Domain.Entities.ContentRenderConfig", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("BlogPostId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("ContentBlockId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<DateTimeOffset>("DateUpdated")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<bool>("IsExist")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RendererData")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<Guid>("RendererId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogPostId");
+
+                    b.HasIndex("ContentBlockId");
+
+                    b.ToTable("blog_content_render_config");
                 });
 
             modelBuilder.Entity("Cnblogs.Fluss.Domain.Entities.BlogPost", b =>
@@ -201,38 +211,35 @@ namespace Cnblogs.Fluss.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Cnblogs.Fluss.Domain.Entities.ContentBlock", "ReferringBlock")
-                        .WithMany()
-                        .HasForeignKey("Refer")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("BlogSite");
-
-                    b.Navigation("ReferringBlock");
-                });
-
-            modelBuilder.Entity("Cnblogs.Fluss.Domain.Entities.PostContentRecord", b =>
-                {
-                    b.HasOne("Cnblogs.Fluss.Domain.Entities.ContentBlock", "ContentBlock")
-                        .WithMany("PostContentRecords")
-                        .HasForeignKey("ContentBlockId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("Cnblogs.Fluss.Domain.Entities.BlogPost", "BlogPost")
-                        .WithMany("ContentRecords")
+                        .WithMany("ContentBlocks")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("BlogPost");
 
-                    b.Navigation("ContentBlock");
+                    b.Navigation("BlogSite");
+                });
+
+            modelBuilder.Entity("Cnblogs.Fluss.Domain.Entities.ContentRenderConfig", b =>
+                {
+                    b.HasOne("Cnblogs.Fluss.Domain.Entities.BlogPost", null)
+                        .WithMany("ContentRenderConfigs")
+                        .HasForeignKey("BlogPostId");
+
+                    b.HasOne("Cnblogs.Fluss.Domain.Entities.ContentBlock", null)
+                        .WithMany("RenderConfigs")
+                        .HasForeignKey("ContentBlockId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Cnblogs.Fluss.Domain.Entities.BlogPost", b =>
                 {
-                    b.Navigation("ContentRecords");
+                    b.Navigation("ContentBlocks");
+
+                    b.Navigation("ContentRenderConfigs");
                 });
 
             modelBuilder.Entity("Cnblogs.Fluss.Domain.Entities.BlogSite", b =>
@@ -244,7 +251,7 @@ namespace Cnblogs.Fluss.Infrastructure.Migrations
 
             modelBuilder.Entity("Cnblogs.Fluss.Domain.Entities.ContentBlock", b =>
                 {
-                    b.Navigation("PostContentRecords");
+                    b.Navigation("RenderConfigs");
                 });
 #pragma warning restore 612, 618
         }

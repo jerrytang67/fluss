@@ -2,7 +2,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal AS base
 RUN apt-get update && apt-get install -y curl
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM node:lts-alpine AS build-node
 WORKDIR /src

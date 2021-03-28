@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cnblogs.Fluss.Domain.Entities;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Polly;
 
@@ -39,7 +38,7 @@ namespace Cnblogs.Fluss.Infrastructure
         /// <param name="context">The <see cref="BlogDbContext"/> to use.</param>
         public static void Seed(BlogDbContext context)
         {
-            var blog = new BlogSite { Title = "Fluss", SubTitle = "Cnblogs" };
+            var blog = new BlogSite {Title = "Fluss", SubTitle = "Cnblogs"};
             context.Add(blog);
             context.SaveChanges();
             var body = new ContentBlock
@@ -47,7 +46,7 @@ namespace Cnblogs.Fluss.Infrastructure
                 BlogId = blog.Id,
                 Raw = "<p>content block</p>",
                 Content = "<p>content block</p>",
-                RenderConfigs = new List<ContentRenderConfig> { new() { RendererId = Guid.Empty } }
+                RenderConfigs = new List<ContentRenderConfig> {new() {RendererId = Guid.Empty}}
             };
             var post = new BlogPost
             {
@@ -56,15 +55,15 @@ namespace Cnblogs.Fluss.Infrastructure
                     "based on .NET，fluss can save and display your work plan or blog post. Content block referring can save your time of maintaining same content between different posts",
                 AutoDesc =
                     "based on .NET，fluss can save and display your work plan or blog posts. Content block referring can save your time of maintaining same content between different posts",
-                ContentBlocks = new List<ContentBlock> { body }
+                ContentBlocks = new List<ContentBlock> {body}
             };
-            blog.BlogPosts = new List<BlogPost> { post };
+            blog.BlogPosts = new List<BlogPost> {post};
             context.SaveChanges();
         }
 
         private static Policy CreatePolicy()
         {
-            return Policy.Handle<SqlException>().WaitAndRetry(5, _ => TimeSpan.FromSeconds(5));
+            return Policy.Handle<Exception>().WaitAndRetry(5, _ => TimeSpan.FromSeconds(5));
         }
     }
 }

@@ -14,6 +14,8 @@ namespace Cnblogs.Fluss.Web.Models
         /// </summary>
         public string SubTitle { get; set; } = string.Empty;
 
+        public string FooterText { get; set; } = string.Empty;
+
         /// <summary>
         /// 博客首页分页列表数。
         /// </summary>

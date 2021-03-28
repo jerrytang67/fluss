@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using Cnblogs.Fluss.Domain.Abstractions;
 
 namespace Cnblogs.Fluss.Domain.Entities
@@ -18,6 +20,8 @@ namespace Cnblogs.Fluss.Domain.Entities
         /// Blog subtitle.
         /// </summary>
         public string SubTitle { get; set; } = string.Empty;
+
+        [StringLength(512)] public string FooterText { get; set; } = string.Empty;
 
         /// <summary>
         /// The page size for blog home page.

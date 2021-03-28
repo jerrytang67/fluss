@@ -27,14 +27,17 @@ namespace Cnblogs.Fluss.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var mySqlConnectionStr = Configuration.GetConnectionString("blog");
+
             services.AddMediatR(typeof(BlogSite).Assembly, typeof(Startup).Assembly);
             services.AddDbContext<BlogDbContext>(
-                option => option.UseSqlServer(
-                    Configuration.GetConnectionString("blog"),
+                option => option.UseMySql(
+                    mySqlConnectionStr,
+                    ServerVersion.AutoDetect(mySqlConnectionStr),
                     sqlServerOption =>
                     {
                         sqlServerOption.MigrationsAssembly(typeof(BlogDbContext).GetTypeInfo().Assembly.GetName().Name);
-                        sqlServerOption.EnableRetryOnFailure(3, TimeSpan.FromSeconds(5), null);
+                        // sqlServerOption.EnableRetryOnFailure(3, TimeSpan.FromSeconds(5), null);
                     }));
 
             services.AddHttpClient();
@@ -69,10 +72,7 @@ namespace Cnblogs.Fluss.Web
             app.UseAuthorization();
 
             app.UseEndpoints(
-                endpoints =>
-                {
-                    endpoints.MapDefaultControllerRoute();
-                });
+                endpoints => { endpoints.MapDefaultControllerRoute(); });
         }
     }
 }
