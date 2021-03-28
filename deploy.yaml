@@ -1,12 +1,10 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: fluss-v1-7cfcbb9499-qrt5j
-  generateName: fluss-v1-7cfcbb9499-
+  name: fluss-v1
   namespace: demo
   labels:
     app: fluss
-    pod-template-hash: 7cfcbb9499
     version: v1
   annotations:
     cni.projectcalico.org/podIP: 10.233.70.153/32
