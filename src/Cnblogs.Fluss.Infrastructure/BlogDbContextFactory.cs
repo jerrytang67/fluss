@@ -13,7 +13,7 @@ namespace Cnblogs.Fluss.Infrastructure
         /// <inheritdoc />
         public BlogDbContext CreateDbContext(string[] args)
         {
-            var mySqlConnectionStr = "Server=122.51.103.18;Database=fluss;Uid=root;Pwd=^TFC6tfc;";
+            var mySqlConnectionStr = "Server=.;Database=fluss;";
             var options = new DbContextOptionsBuilder<BlogDbContext>();
             options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr));
             return new BlogDbContext(options.Options, new Mediator(_ => new object()));
